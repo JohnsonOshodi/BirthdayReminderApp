@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Reminder App</title>
+    <style>
+        /* General body styling */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f4f8;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container for the app */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling */
+header {
+  background: #4caf50;
+  color: #fff;
+  padding: 15px;
+  border-radius: 8px 8px 0 0;
+  text-align: center;
+  font-size: 24px;
+}
+
+/* Form styling */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+form input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+/* Button styling */
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background: #4caf50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #45a049;
+}
+
+/* Notification styling */
+.notification {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.notification.success {
+  background: #4caf50;
+}
+
+.notification.error {
+  background: #f44336;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
+  }
+
+  form input,
+  button {
+    font-size: 14px;
+  }
+}
+
+    </style>
+</head>
+<body>
+    <h1>Birthday Reminder</h1>
+    <form id="birthdayForm">
+        <input type="text" id="username" placeholder="Enter Username" required />
+        <input type="email" id="email" placeholder="Enter Email" required />
+        <input type="date" id="dob" required />
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        const form = document.getElementById('birthdayForm');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const dob = document.getElementById('dob').value;
+
+            const response = await fetch('/add-birthday', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, email, dob })
+            });
+
+            if (response.ok) {
+                alert('Birthday saved successfully!');
+            } else {
+                alert('Failed to save birthday.');
+            }
+        });
+    </script>
+    
+</body>
+</html>
